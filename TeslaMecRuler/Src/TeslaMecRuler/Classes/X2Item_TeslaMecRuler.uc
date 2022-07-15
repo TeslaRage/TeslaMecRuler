@@ -11,7 +11,6 @@ static function array<X2DataTemplate> CreateTemplates()
 
 	Weapons.AddItem(CreateTemplate_MecRuler_Rifle());
 	Weapons.AddItem(CreateTemplate_MecRuler_ShoulderWeapon());
-	// Weapons.AddItem(CreateTemplate_MecRuler_Bit());
 
 	return Weapons;
 }
@@ -43,8 +42,6 @@ static function X2DataTemplate CreateTemplate_MecRuler_Rifle()
 	Template.Abilities.AddItem('HotLoadAmmo');
 	Template.Abilities.AddItem('Suppression');
 
-	// Template.GameArchetype = "WP_AdvMec_Gun.WP_AdvMecGun";
-	// Template.GameArchetype = "DLC_3_WP_SparkRifle_BM.WP_SparkRifle_BM";
 	Template.GameArchetype = "DLC_3_WP_SparkRifle_MG.WP_SparkRifle_MG";
 
 	Template.iPhysicsImpulse = 5;
@@ -54,23 +51,8 @@ static function X2DataTemplate CreateTemplate_MecRuler_Rifle()
 
 	Template.DamageTypeTemplateName = 'Projectile_MagAdvent';
 
-	// Template.OnAcquiredFn = ApplyUpgrades;
-
 	return Template;
 }
-
-// static function bool ApplyUpgrades(XComGameState NewGameState, XComGameState_Item ItemState)
-// {
-// 	local X2ItemTemplateManager ItemMan;
-
-// 	ItemMan = class'X2ItemTemplateManager'.static.GetItemTemplateManager();
-
-// 	ItemState.ApplyWeaponUpgradeTemplate(X2WeaponUpgradeTemplate(ItemMan.FindItemTemplate('AimUpgrade_Adv')));
-// 	ItemState.ApplyWeaponUpgradeTemplate(X2WeaponUpgradeTemplate(ItemMan.FindItemTemplate('MissDamageUpgrade_Adv')));
-// 	ItemState.ApplyWeaponUpgradeTemplate(X2WeaponUpgradeTemplate(ItemMan.FindItemTemplate('ClipSizeUpgrade_Sup')));
-
-// 	return true;
-// }
 
 static function X2DataTemplate CreateTemplate_MecRuler_ShoulderWeapon()
 {
