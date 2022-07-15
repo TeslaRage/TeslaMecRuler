@@ -1,0 +1,8 @@
+class X2Effect_ApplyWeaponDamage_TeslaMecRuler extends X2Effect_ApplyWeaponDamage;
+
+var WeaponDamageValue StrikeDamage;
+
+function WeaponDamageValue GetBonusEffectDamageValue(XComGameState_Ability AbilityState, XComGameState_Unit SourceUnit, XComGameState_Item SourceWeapon, StateObjectReference TargetRef)
+{
+	return StrikeDamage;
+}
