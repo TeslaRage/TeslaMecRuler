@@ -10,16 +10,36 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="Config\" />
+    <Folder Include="Config\Compatibility" />
     <Folder Include="Localization\" />
+    <Folder Include="Content" />
     <Folder Include="Src\" />
     <Folder Include="Src\TeslaMecRuler\" />
     <Folder Include="Src\TeslaMecRuler\Classes\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Config\Compatibility\XComANCE_units.ini">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Config\Compatibility\XComGame.ini">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Config\Compatibility\XComNew2020Icons.ini">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="Config\XComAI.ini">
       <SubType>Content</SubType>
     </Content>
+    <Content Include="Config\XComContent.ini">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Config\XComEncounterLists.ini">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="Config\XComEncounters.ini">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Config\XComGameCore.ini">
       <SubType>Content</SubType>
     </Content>
     <Content Include="Config\XComGameData.ini">
@@ -32,6 +52,9 @@
       <SubType>Content</SubType>
     </Content>
     <Content Include="Config\XComGameData_WeaponData.ini">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Content\TMR_Spark.upk">
       <SubType>Content</SubType>
     </Content>
     <Content Include="Localization\DLC_3.int">

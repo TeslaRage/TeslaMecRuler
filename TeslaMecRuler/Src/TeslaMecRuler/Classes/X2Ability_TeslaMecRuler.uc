@@ -7,6 +7,12 @@ var config float BSLIKEEFFECT_DAMAGEREDUCTION;
 var config float MELEE_DAMAGEREDUCTION;
 var config WeaponDamageValue STRIKEDAMAGE;
 
+var config int MECRULER_ARMOR_HEALTH_BONUS;
+var config int MECRULER_ARMOR_MOBILITY_BONUS;
+var config int MECRULER_ARMOR_DODGE_BONUS;
+var config int MECRULER_ARMOR_MITIGATION_CHANCE;
+var config int MECRULER_ARMOR_MITIGATION_AMOUNT;
+
 static function array<X2DataTemplate> CreateTemplates()
 {
 	local array<X2DataTemplate> Templates;
@@ -16,6 +22,7 @@ static function array<X2DataTemplate> CreateTemplates()
 	Templates.AddItem(CreateBSDamaReductionModule());
 	Templates.AddItem(CreateMeleeResistanceModule());
 	Templates.AddItem(CreateMeleeStrike());
+	Templates.AddItem(CreateMecRulerArmorStats());
 
 	return Templates;
 }
@@ -103,7 +110,7 @@ static function X2AbilityTemplate CreateArmorRepairModule()
 	local X2Effect_TeslaMecRuler RegenerationEffect;
 
 	`CREATE_X2ABILITY_TEMPLATE(Template, 'MecRulerArmorRepairModule');
-	Template.IconImage = "img:///UILibrary_PerkIcons.UIPerk_item_nanofibervest";
+	Template.IconImage = "img:///UILibrary_PerkIcons.UIPerk_repair";
 
 	Template.AbilitySourceName = 'eAbilitySource_Perk';
 	Template.eAbilityIconBehaviorHUD = eAbilityIconBehavior_NeverShow;
@@ -133,7 +140,7 @@ static function X2AbilityTemplate CreateBSDamaReductionModule()
 	local X2Effect_TeslaMecRuler DamageReductionEffect;
 
 	`CREATE_X2ABILITY_TEMPLATE(Template, 'MecRulerBSDamageReductionModule');
-	Template.IconImage = "img:///UILibrary_PerkIcons.UIPerk_item_nanofibervest";
+	Template.IconImage = "img:///UILibrary_PerkIcons.UIPerk_damage_control";
 
 	Template.AbilitySourceName = 'eAbilitySource_Perk';
 	Template.eAbilityIconBehaviorHUD = eAbilityIconBehavior_NeverShow;
@@ -162,7 +169,7 @@ static function X2AbilityTemplate CreateMeleeResistanceModule()
 	local X2Effect_TeslaMecRuler DamageReductionEffect;
 
 	`CREATE_X2ABILITY_TEMPLATE(Template, 'MecRulerMeleeResistanceModule');
-	Template.IconImage = "img:///UILibrary_PerkIcons.UIPerk_item_nanofibervest";
+	Template.IconImage = "img:///UILibrary_PerkIcons.UIPerk_sectoid_meleevulnerability";
 
 	Template.AbilitySourceName = 'eAbilitySource_Perk';
 	Template.eAbilityIconBehaviorHUD = eAbilityIconBehavior_NeverShow;
@@ -260,6 +267,43 @@ static function X2AbilityTemplate CreateMeleeStrike()
 	Template.ChosenActivationIncreasePerUse = class'X2AbilityTemplateManager'.default.StandardShotChosenActivationIncreasePerUse;
 	Template.LostSpawnIncreasePerUse = class'X2AbilityTemplateManager'.default.MeleeLostSpawnIncreasePerUse;
 	Template.bFrameEvenWhenUnitIsHidden = true;
+
+	return Template;
+}
+
+static function X2AbilityTemplate CreateMecRulerArmorStats()
+{
+	local X2AbilityTemplate Template;
+	local X2AbilityTrigger Trigger;
+	local X2AbilityTarget_Self TargetStyle;
+	local X2Effect_PersistentStatChange PersistentStatChangeEffect;
+
+	`CREATE_X2ABILITY_TEMPLATE(Template, 'MecRulerArmorStats');
+	Template.RemoveTemplateAvailablility(Template.BITFIELD_GAMEAREA_Multiplayer);
+
+	Template.AbilitySourceName = 'eAbilitySource_Item';
+	Template.eAbilityIconBehaviorHUD = EAbilityIconBehavior_NeverShow;
+	Template.Hostility = eHostility_Neutral;
+	Template.bDisplayInUITacticalText = false;
+
+	Template.AbilityToHitCalc = default.DeadEye;
+
+	TargetStyle = new class'X2AbilityTarget_Self';
+	Template.AbilityTargetStyle = TargetStyle;
+
+	Trigger = new class'X2AbilityTrigger_UnitPostBeginPlay';
+	Template.AbilityTriggers.AddItem(Trigger);
+
+	PersistentStatChangeEffect = new class'X2Effect_PersistentStatChange';
+	PersistentStatChangeEffect.BuildPersistentEffect(1, true, false, false);
+	PersistentStatChangeEffect.AddPersistentStatChange(eStat_HP, default.MECRULER_ARMOR_HEALTH_BONUS);
+	PersistentStatChangeEffect.AddPersistentStatChange(eStat_Mobility, default.MECRULER_ARMOR_MOBILITY_BONUS);
+	PersistentStatChangeEffect.AddPersistentStatChange(eStat_Dodge, default.MECRULER_ARMOR_DODGE_BONUS);
+	PersistentStatChangeEffect.AddPersistentStatChange(eStat_ArmorChance, default.MECRULER_ARMOR_MITIGATION_CHANCE);
+	PersistentStatChangeEffect.AddPersistentStatChange(eStat_ArmorMitigation, default.MECRULER_ARMOR_MITIGATION_AMOUNT);
+	Template.AddTargetEffect(PersistentStatChangeEffect);
+
+	Template.BuildNewGameStateFn = TypicalAbility_BuildGameState;
 
 	return Template;
 }

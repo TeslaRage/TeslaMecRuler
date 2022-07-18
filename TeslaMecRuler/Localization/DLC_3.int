@@ -1,2 +1,11 @@
 [MecRuler X2SparkCharacterTemplate_DLC_3]
-strCharacterName="Advent Spark"
+strCharacterName="Advent SPARK Ruler"
+
+[TR_AdventSpark X2SparkCharacterTemplate_DLC_3]
+strCharacterName="Advent SPARK"
+
+[MecRulerArmor_XCOM X2SparkArmorTemplate_DLC_3]
+FriendlyName="Advent SPARK Chassis"
+FriendlyNamePlural="Advent SPARK Chassis"
+BriefSummary="Very similar to our SPARK's Reinforced Frames but with modifications to enhance durability and automated armor repair."
+TacticalText="<Bullet/> High survivability features allowing Spark-like units to stand the heat of battle."
