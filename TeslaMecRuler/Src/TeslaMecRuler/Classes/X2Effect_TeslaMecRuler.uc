@@ -5,6 +5,7 @@ var int MaxArmorRepairAmount;
 var name ArmorRepairedName;
 var float BSDamageReductionPrcnt;
 var float MeleeDamageReductionPrcnt;
+var int BonusDamageWithShield;
 
 var localized string ArmorRepairedMessage;
 
@@ -127,6 +128,24 @@ function int GetDefendingDamageModifier(XComGameState_Effect EffectState, XComGa
 	}
 
 	return DamageMod;
+}
+
+function int GetAttackingDamageModifier(XComGameState_Effect EffectState, XComGameState_Unit Attacker, Damageable TargetDamageable, XComGameState_Ability AbilityState, const out EffectAppliedData AppliedData, const int CurrentDamage, optional XComGameState NewGameState)
+{
+	local XComGameState_Unit Unit;
+
+	if (BonusDamageWithShield > 0)
+	{
+		Unit = XComGameState_Unit(TargetDamageable);
+		if (Unit == none) return 0;
+
+		if (Unit.GetCurrentStat(eStat_ShieldHP) > 0)
+		{
+			return BonusDamageWithShield;
+		}
+	}
+
+	return 0;
 }
 
 defaultproperties

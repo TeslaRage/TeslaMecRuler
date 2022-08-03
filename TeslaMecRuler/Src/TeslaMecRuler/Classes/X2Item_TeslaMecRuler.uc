@@ -2,8 +2,14 @@ class X2Item_TeslaMecRuler extends X2Item config(GameData_WeaponData);
 
 var config WeaponDamageValue MECRULERRIFLE_BASEDAMAGE;
 var config int MECRULERRIFLE_ICLIPSIZE;
+var config WeaponDamageValue ADVSPARKRIFLE_BASEDAMAGE;
+var config int ADVSPARKRIFLE_ICLIPSIZE;
+
 var config WeaponDamageValue MECRULERSHOULDERWEAPON_BASEDAMAGE;
 var config int MECRULERSHOULDERWEAPON_CLIPSIZE;
+var config WeaponDamageValue ADVSPARKSHOULDERWEAPON_BASEDAMAGE;
+var config int ADVSPARKSHOULDERWEAPON_CLIPSIZE;
+
 var config int CTDROUNDS_DMGMOD;
 
 static function array<X2DataTemplate> CreateTemplates()
@@ -11,7 +17,9 @@ static function array<X2DataTemplate> CreateTemplates()
 	local array<X2DataTemplate> Items;
 
 	Items.AddItem(CreateTemplate_MecRuler_Rifle());
+	Items.AddItem(CreateTemplate_AdvSpark_Rifle());
 	Items.AddItem(CreateTemplate_MecRuler_ShoulderWeapon());
+	Items.AddItem(CreateTemplate_AdvSpark_ShoulderWeapon());
 	Items.AddItem(CreateTemplate_CTDRounds());
 
 	Items.AddItem(CreateTemplate_MecRuler_Armor_XCOM());
@@ -34,6 +42,46 @@ static function X2DataTemplate CreateTemplate_MecRuler_Rifle()
 	Template.RangeAccuracy = class'X2Item_DefaultWeapons'.default.FLAT_CONVENTIONAL_RANGE;
 	Template.BaseDamage = default.MECRULERRIFLE_BASEDAMAGE;
 	Template.iClipSize = default.MECRULERRIFLE_ICLIPSIZE;
+	Template.iSoundRange = class'X2Item_DefaultWeapons'.default.ASSAULTRIFLE_MAGNETIC_ISOUNDRANGE;
+	Template.iEnvironmentDamage = class'X2Item_DefaultWeapons'.default.ASSAULTRIFLE_MAGNETIC_IENVIRONMENTDAMAGE;
+	Template.iIdealRange = class'X2Item_DefaultWeapons'.default.ADVMEC_M2_IDEALRANGE;
+
+	Template.InventorySlot = eInvSlot_PrimaryWeapon;
+	Template.Abilities.AddItem('StandardShot');
+	Template.Abilities.AddItem('Overwatch');
+	Template.Abilities.AddItem('OverwatchShot');
+	Template.Abilities.AddItem('Reload');
+	Template.Abilities.AddItem('HotLoadAmmo');
+	Template.Abilities.AddItem('Suppression');
+	Template.Abilities.AddItem('MecRulerRootProtocolShot');
+
+	Template.GameArchetype = "DLC_3_WP_SparkRifle_MG.WP_SparkRifle_MG";
+
+	Template.iPhysicsImpulse = 5;
+
+	Template.CanBeBuilt = false;
+	Template.TradingPostValue = 30;
+
+	Template.DamageTypeTemplateName = 'Projectile_MagAdvent';
+
+	return Template;
+}
+
+static function X2DataTemplate CreateTemplate_AdvSpark_Rifle()
+{
+	local X2WeaponTemplate Template;
+
+	`CREATE_X2TEMPLATE(class'X2WeaponTemplate', Template, 'TRAdvSpark_Rifle');
+	
+	Template.WeaponPanelImage = "_BeamRifle";
+	Template.ItemCat = 'weapon';
+	Template.WeaponCat = 'sparkrifle';
+	Template.WeaponTech = 'magnetic';
+	Template.strImage = "img:///UILibrary_Common.AlienWeapons.AdventMecGun";
+
+	Template.RangeAccuracy = class'X2Item_DefaultWeapons'.default.FLAT_CONVENTIONAL_RANGE;
+	Template.BaseDamage = default.ADVSPARKRIFLE_BASEDAMAGE;
+	Template.iClipSize = default.ADVSPARKRIFLE_ICLIPSIZE;
 	Template.iSoundRange = class'X2Item_DefaultWeapons'.default.ASSAULTRIFLE_MAGNETIC_ISOUNDRANGE;
 	Template.iEnvironmentDamage = class'X2Item_DefaultWeapons'.default.ASSAULTRIFLE_MAGNETIC_IENVIRONMENTDAMAGE;
 	Template.iIdealRange = class'X2Item_DefaultWeapons'.default.ADVMEC_M2_IDEALRANGE;
@@ -80,6 +128,48 @@ static function X2DataTemplate CreateTemplate_MecRuler_ShoulderWeapon()
 	
 	Template.InventorySlot = eInvSlot_SecondaryWeapon;
 	Template.Abilities.AddItem('MecRulerMicroMissiles');
+	
+	// This all the resources; sounds, animations, models, physics, the works.
+	Template.GameArchetype = "WP_AdvMec_Launcher.WP_AdvMecLauncher";
+
+	Template.iPhysicsImpulse = 5;
+
+	Template.CanBeBuilt = false;
+	Template.TradingPostValue = 30;
+	Template.iRange = 20;
+
+	// This controls how much arc this projectile may have and how many times it may bounce
+	Template.WeaponPrecomputedPathData.InitialPathTime = 1.5;
+	Template.WeaponPrecomputedPathData.MaxPathTime = 2.5;
+	Template.WeaponPrecomputedPathData.MaxNumberOfBounces = 0;
+
+	Template.DamageTypeTemplateName = 'Explosion';
+
+	return Template;
+}
+
+static function X2DataTemplate CreateTemplate_AdvSpark_ShoulderWeapon()
+{
+	local X2WeaponTemplate Template;
+
+	`CREATE_X2TEMPLATE(class'X2WeaponTemplate', Template, 'TRAdvSpark_ShoulderWeapon');
+	
+	Template.WeaponPanelImage = "_ConventionalRifle";
+	Template.ItemCat = 'weapon';
+	Template.WeaponCat = 'shoulder_launcher';
+	Template.WeaponTech = 'conventional';
+	Template.strImage = "img:///UILibrary_Common.AlienWeapons.AdventMecGun";
+	Template.RemoveTemplateAvailablility(Template.BITFIELD_GAMEAREA_Multiplayer); //invalidates multiplayer availability
+
+	Template.RangeAccuracy = class'X2Item_DefaultWeapons'.default.FLAT_CONVENTIONAL_RANGE;
+	Template.BaseDamage = default.ADVSPARKSHOULDERWEAPON_BASEDAMAGE;
+	Template.iClipSize = default.ADVSPARKSHOULDERWEAPON_CLIPSIZE;
+	Template.iSoundRange = class'X2Item_DefaultWeapons'.default.ASSAULTRIFLE_MAGNETIC_ISOUNDRANGE;
+	Template.iEnvironmentDamage = class'X2Item_DefaultWeapons'.default.ASSAULTRIFLE_MAGNETIC_IENVIRONMENTDAMAGE;
+	Template.iIdealRange = class'X2Item_DefaultWeapons'.default.ADVMEC_M2_IDEALRANGE;
+
+	Template.InventorySlot = eInvSlot_SecondaryWeapon;
+	Template.Abilities.AddItem('TRAdvSparkMicroMissiles');
 	
 	// This all the resources; sounds, animations, models, physics, the works.
 	Template.GameArchetype = "WP_AdvMec_Launcher.WP_AdvMecLauncher";
@@ -163,6 +253,8 @@ static function X2DataTemplate CreateTemplate_CTDRounds()
 	RemoveEffects = new class'X2Effect_RemoveEffects';
 	RemoveEffects.EffectNamesToRemove.AddItem(class'X2Effect_EnergyShield'.default.EffectName);
 	Template.TargetEffects.AddItem(RemoveEffects);
+
+	Template.Abilities.AddItem('CTDRoundsShieldBurst');
 
 	Template.SetUIStatMarkup(class'XLocalizedData'.default.RoboticDamageBonusLabel, , default.CTDROUNDS_DMGMOD);
 		

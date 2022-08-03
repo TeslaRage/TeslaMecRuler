@@ -17,6 +17,7 @@ static event OnLoadedSavedGame()
 static event OnPostTemplatesCreated()
 {
 	TryAddToExistingRulerEncounterBuckets('MecRuler');
+	AddNewUnitsAsSupportedFollowers('TR_AdventSpark', 'AdvMEC_M2');
 }
 
 // =============
@@ -112,6 +113,33 @@ static protected function InitRulerForExistingCampaign (XComGameState NewGameSta
 	UnitState.ApplyFirstTimeStatModifiers(); // Update the Ruler HP values to work with Beta Strike
 	RulerManager.AllAlienRulers.AddItem(UnitState.GetReference());
 	class'X2Helpers_DLC_Day60'.static.UpdateRulerEscapeHealth(UnitState);
+}
+
+static function AddNewUnitsAsSupportedFollowers(name CharToAdd, name SimilarChar)
+{
+	local X2CharacterTemplateManager CharMan;
+	local X2CharacterTemplate CharTemplate;
+	local array<X2DataTemplate> DataTemplates;
+	local X2DataTemplate DataTemplate, DataTemplateDiff;
+
+	CharMan = class'X2CharacterTemplateManager'.static.GetCharacterTemplateManager();
+
+	foreach CharMan.IterateTemplates(DataTemplate)
+	{
+		CharMan.FindDataTemplateAllDifficulties(DataTemplate.DataName, DataTemplates);
+
+		foreach DataTemplates(DataTemplateDiff)
+		{
+			CharTemplate = X2CharacterTemplate(DataTemplateDiff);
+			if (CharTemplate == none) continue;
+
+			if (CharTemplate.SupportedFollowers.Find(SimilarChar) == INDEX_NONE)
+				continue;
+
+			CharTemplate.SupportedFollowers.AddItem(CharToAdd);
+			// `LOG("Added " $CharToAdd @"as supported followers to " $CharTemplate, true, 'TMRDEBUG');
+		}
+	}
 }
 
 // =============

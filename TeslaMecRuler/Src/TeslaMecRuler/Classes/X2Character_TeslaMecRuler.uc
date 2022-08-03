@@ -91,18 +91,18 @@ static function X2CharacterTemplate CreateTemplate_MecRuler()
 
 	// Appearance
 	CharTemplate.bForceAppearance = true;
-	CharTemplate.ForceAppearance.iArmorTint = 6;
-	CharTemplate.ForceAppearance.iArmorTintSecondary = 79;
-	CharTemplate.ForceAppearance.iAttitude = 2;
-	CharTemplate.ForceAppearance.iWeaponTint = 8;
-	CharTemplate.ForceAppearance.nmArms = 'Spark_A';
-	CharTemplate.ForceAppearance.nmFlag = 'Country_Spark';
-	CharTemplate.ForceAppearance.nmHead = 'Spark_Head_F';
-	CharTemplate.ForceAppearance.nmLegs = 'Spark_A';
-	CharTemplate.ForceAppearance.nmPawn = 'XCom_Soldier_Spark';
-	CharTemplate.ForceAppearance.nmTorso = 'Spark_A';
-	CharTemplate.ForceAppearance.nmWeaponPattern = 'Pat_Nothing';
-	CharTemplate.ForceAppearance.nmVoice = 'SparkJulianVoice1_English';
+	// CharTemplate.ForceAppearance.iArmorTint = 6;
+	// CharTemplate.ForceAppearance.iArmorTintSecondary = 79;
+	// CharTemplate.ForceAppearance.iAttitude = 2;
+	// CharTemplate.ForceAppearance.iWeaponTint = 8;
+	// CharTemplate.ForceAppearance.nmArms = 'Spark_A';
+	// CharTemplate.ForceAppearance.nmFlag = 'Country_Spark';
+	// CharTemplate.ForceAppearance.nmHead = 'Spark_Head_F';
+	// CharTemplate.ForceAppearance.nmLegs = 'Spark_A';
+	// CharTemplate.ForceAppearance.nmPawn = 'XCom_Soldier_Spark';
+	// CharTemplate.ForceAppearance.nmTorso = 'Spark_A';
+	// CharTemplate.ForceAppearance.nmWeaponPattern = 'Pat_Nothing';
+	// CharTemplate.ForceAppearance.nmVoice = 'SparkJulianVoice1_English';
 
 	return CharTemplate;
 }
@@ -114,7 +114,7 @@ static function X2CharacterTemplate CreateTemplate_AdventSpark()
 
 	`CREATE_X2TEMPLATE(class'X2SparkCharacterTemplate_DLC_3', CharTemplate, 'TR_AdventSpark');
 	CharTemplate.CharacterGroupName = 'AdventMEC';
-	CharTemplate.DefaultLoadout='MecRuler_Loadout';
+	CharTemplate.DefaultLoadout='TRAdvSpark_Loadout';
 	CharTemplate.BehaviorClass=class'XGAIBehavior';
 	Loot.ForceLevel=0;
 	Loot.LootTableName='AdvMEC_M2_BaseLoot';
@@ -174,17 +174,17 @@ static function X2CharacterTemplate CreateTemplate_AdventSpark()
 
 	// Appearance
 	CharTemplate.bForceAppearance = true;
-	CharTemplate.ForceAppearance.iArmorTint = 6;
-	CharTemplate.ForceAppearance.iArmorTintSecondary = 79;
-	CharTemplate.ForceAppearance.iAttitude = 2;
-	CharTemplate.ForceAppearance.iWeaponTint = 8;
-	CharTemplate.ForceAppearance.nmArms = 'Spark_A';
-	CharTemplate.ForceAppearance.nmFlag = 'Country_Spark';
-	CharTemplate.ForceAppearance.nmHead = 'Spark_Head_F';
-	CharTemplate.ForceAppearance.nmLegs = 'Spark_A';
-	CharTemplate.ForceAppearance.nmPawn = 'XCom_Soldier_Spark';
-	CharTemplate.ForceAppearance.nmTorso = 'Spark_A';
-	CharTemplate.ForceAppearance.nmWeaponPattern = 'Pat_Nothing';
+	// CharTemplate.ForceAppearance.iArmorTint = 6;
+	// CharTemplate.ForceAppearance.iArmorTintSecondary = 79;
+	// CharTemplate.ForceAppearance.iAttitude = 2;
+	// CharTemplate.ForceAppearance.iWeaponTint = 8;
+	// CharTemplate.ForceAppearance.nmArms = 'Spark_A';
+	// CharTemplate.ForceAppearance.nmFlag = 'Country_Spark';
+	// CharTemplate.ForceAppearance.nmHead = 'Spark_Head_F';
+	// CharTemplate.ForceAppearance.nmLegs = 'Spark_A';
+	// CharTemplate.ForceAppearance.nmPawn = 'XCom_Soldier_Spark';
+	// CharTemplate.ForceAppearance.nmTorso = 'Spark_A';
+	// CharTemplate.ForceAppearance.nmWeaponPattern = 'Pat_Nothing';
 
 	return CharTemplate;
 }

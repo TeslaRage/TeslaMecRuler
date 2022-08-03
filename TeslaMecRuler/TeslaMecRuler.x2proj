@@ -27,6 +27,9 @@
     <Content Include="Config\Compatibility\XComNew2020Icons.ini">
       <SubType>Content</SubType>
     </Content>
+    <Content Include="Config\Compatibility\XComWOTCLootIndicator_Extended.ini">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="Config\XComAI.ini">
       <SubType>Content</SubType>
     </Content>
@@ -77,6 +80,9 @@
     </Content>
     <Content Include="Src\TeslaMecRuler\Classes\X2DownloadableContentInfo_TeslaMecRuler.uc" />
     <Content Include="Src\TeslaMecRuler\Classes\X2Effect_ApplyWeaponDamage_TeslaMecRuler.uc">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Src\TeslaMecRuler\Classes\X2Effect_PSC_TeslaMecRuler.uc">
       <SubType>Content</SubType>
     </Content>
     <Content Include="Src\TeslaMecRuler\Classes\X2Effect_TeslaMecRuler.uc">
