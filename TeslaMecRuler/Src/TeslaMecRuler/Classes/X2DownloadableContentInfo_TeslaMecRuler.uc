@@ -16,8 +16,15 @@ static event OnLoadedSavedGame()
 
 static event OnPostTemplatesCreated()
 {
+	// local array<name> Chars;
+
 	TryAddToExistingRulerEncounterBuckets('MecRuler');
 	AddNewUnitsAsSupportedFollowers('TR_AdventSpark', 'AdvMEC_M2');
+
+	// Unfortunately too buggy as modmakers are not consistent with flags in X2CharacterTemplate
+	// Chars.AddItem('MecRuler');
+	// Chars.AddItem('TR_AdventSpark');
+	// AddRoboticUnitsAsSupportedFollowersTo(Chars);
 }
 
 // =============
@@ -115,6 +122,8 @@ static protected function InitRulerForExistingCampaign (XComGameState NewGameSta
 	class'X2Helpers_DLC_Day60'.static.UpdateRulerEscapeHealth(UnitState);
 }
 
+// Add units from this mod (`CharToAdd`) to other units where `SimilarChar` is also a supported follower
+// Serves as a way to add a unit from this mod to other mod added units as supported follower
 static function AddNewUnitsAsSupportedFollowers(name CharToAdd, name SimilarChar)
 {
 	local X2CharacterTemplateManager CharMan;
@@ -138,6 +147,53 @@ static function AddNewUnitsAsSupportedFollowers(name CharToAdd, name SimilarChar
 
 			CharTemplate.SupportedFollowers.AddItem(CharToAdd);
 			// `LOG("Added " $CharToAdd @"as supported followers to " $CharTemplate, true, 'TMRDEBUG');
+		}
+	}
+}
+
+// Adds robotic units to `CharsNeedSupportedFollowers` as supported followers
+// Serves as a way to add robotic units in the game (including mod added ones) to units in this mod as
+// supported followers
+static function AddRoboticUnitsAsSupportedFollowersTo(array<name> CharsNeedSupportedFollowers)
+{
+	local X2CharacterTemplateManager CharMan;
+	local X2CharacterTemplate CharTemplate, CharLacksSupportedFollowers;
+	local array<X2DataTemplate> DataTemplates;
+	local X2DataTemplate DataTemplate, DataTemplateDiff;
+	local array<X2CharacterTemplate> CharsLackSupportedFollowers;
+	local name CharName;
+
+	CharMan = class'X2CharacterTemplateManager'.static.GetCharacterTemplateManager();
+
+	foreach CharsNeedSupportedFollowers(CharName)
+	{
+		CharMan.FindDataTemplateAllDifficulties(CharName, DataTemplates);
+
+		foreach DataTemplates(DataTemplateDiff)
+		{
+			CharTemplate = X2CharacterTemplate(DataTemplateDiff);
+			if (CharTemplate != none)
+			{
+				CharsLackSupportedFollowers.AddItem(CharTemplate);
+			}
+		}
+	}
+
+	foreach CharMan.IterateTemplates(DataTemplate)
+	{
+		CharTemplate = X2CharacterTemplate(DataTemplate);
+		if (CharTemplate == none) continue;
+
+		if (CharTemplate.bIsRobotic && !CharTemplate.bIsTurret && CharTemplate.bAllowSpawnFromATT && !CharTemplate.bIsSoldier
+			&& !CharTemplate.bIsCivilian
+			&& CharTemplate.Abilities.Find('ChallengeMode_Hack') == INDEX_NONE
+			&& CharTemplate.TemplateAvailability == class'X2DataTemplate'.const.BITFIELD_GAMEAREA_Singleplayer)
+		{
+			foreach CharsLackSupportedFollowers(CharLacksSupportedFollowers)
+			{
+				CharLacksSupportedFollowers.SupportedFollowers.AddItem(CharTemplate.DataName);
+				`LOG("Added " $CharTemplate.DataName @"as a supported follower to " $CharLacksSupportedFollowers.DataName, true, 'TMRDEBUG');
+			}
 		}
 	}
 }
