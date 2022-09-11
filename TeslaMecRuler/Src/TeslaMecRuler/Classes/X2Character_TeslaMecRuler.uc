@@ -80,6 +80,8 @@ static function X2CharacterTemplate CreateTemplate_MecRuler()
 	CharTemplate.Abilities.AddItem('MecRulerMeleeResistanceModule');	
 	CharTemplate.Abilities.AddItem('MecRulerStrike');
 
+	CharTemplate.ImmuneTypes.AddItem('Mental');
+
 	CharTemplate.strHackIconImage = "UILibrary_Common.TargetIcons.Hack_robot_icon";
 	CharTemplate.strTargetIconImage = class'UIUtilities_Image'.const.TargetIcon_Advent;
 
